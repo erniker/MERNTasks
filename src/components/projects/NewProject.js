@@ -4,7 +4,7 @@ import projectContext from "../../context/projects/projectContext";
 const NewProject = () => {
   // Get form state
   const projectsContext = useContext(projectContext);
-  const { form, showForm } = projectsContext;
+  const { form, errorForm, showForm, addProject, showError } = projectsContext;
 
   // Project State
   const [project, saveProject] = useState({
@@ -26,11 +26,17 @@ const NewProject = () => {
   const onSubmitProject = (e) => {
     e.preventDefault();
     // Project validate
-
+    if (name === "") {
+      showError();
+      return;
+    }
     // add state
+    addProject(project);
 
     // Clean Form
-
+    saveProject({
+      name: "",
+    });
     // Show Form
   };
   const onClickForm = () => {
@@ -62,6 +68,9 @@ const NewProject = () => {
             value="Agregar Proyecto"
           />
         </form>
+      ) : null}
+      {errorForm ? (
+        <p className="mensaje error">El nombre del Proyecto es obligatorio</p>
       ) : null}
     </>
   );
