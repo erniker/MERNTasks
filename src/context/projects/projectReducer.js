@@ -5,6 +5,7 @@ import {
   ADD_PROJECT,
   VALDATE_FORM,
   ACTUAL_PROJECT,
+  DELETE_PROJECT,
 } from "../../types";
 
 export default (state, action) => {
@@ -37,6 +38,15 @@ export default (state, action) => {
         actualProject: state.projects.filter(
           (project) => project.id === action.payload
         ),
+      };
+    }
+    case DELETE_PROJECT: {
+      return {
+        ...state,
+        projects: state.projects.filter(
+          (project) => project.id !== action.payload
+        ),
+        actualProject: null,
       };
     }
     default:

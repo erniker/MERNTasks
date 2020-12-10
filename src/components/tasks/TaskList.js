@@ -5,9 +5,9 @@ import projectContext from "../../context/projects/projectContext";
 const TaskList = () => {
   // Get Project from initial state
   const projectsContext = useContext(projectContext);
-  const { actualProject } = projectsContext;
+  const { actualProject, deleteProject } = projectsContext;
 
-  // If ther is not selected project
+  // If there is not selected project
   if (!actualProject) return <h2>Selecciona un Proyecto</h2>;
 
   // Array destructuring to extract actual project
@@ -19,6 +19,11 @@ const TaskList = () => {
     { name: "Elegir Plataformas de pago", state: false },
     { name: "Elegir Hosting", state: true },
   ];
+
+  // Delete Project
+  const onClickDeleteProject = () => {
+    deleteProject(posActualProject.id);
+  };
 
   return (
     <>
@@ -32,7 +37,11 @@ const TaskList = () => {
           projectTasks.map((task) => <Task task={task} />)
         )}
       </ul>
-      <button className="btn btn-eliminar" type="button">
+      <button
+        className="btn btn-eliminar"
+        type="button"
+        onClick={onClickDeleteProject}
+      >
         Eliminar Proyecto &times;
       </button>
     </>
