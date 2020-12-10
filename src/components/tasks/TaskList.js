@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Task from "./Task";
+import projectContext from "../../context/projects/projectContext";
 
 const TaskList = () => {
+  // Get Project from initial state
+  const projectsContext = useContext(projectContext);
+  const { actualProject } = projectsContext;
+
+  // If ther is not selected project
+  if (!actualProject) return <h2>Selecciona un Proyecto</h2>;
+
+  // Array destructuring to extract actual project
+  const [posActualProject] = actualProject;
+
   const projectTasks = [
     { name: "Elegir Plataforma", state: true },
     { name: "Elegir Colores", state: false },
@@ -11,7 +22,7 @@ const TaskList = () => {
 
   return (
     <>
-      <h2>Proyrcto: Tienda Virtual</h2>
+      <h2>Proyecto: {posActualProject.name}</h2>
       <ul className="listado-tareas">
         {projectTasks.length === 0 ? (
           <li className="tarea">
