@@ -4,3 +4,6 @@ export const ADD_PROJECT = "ADD_PROJECT";
 export const VALDATE_FORM = "VALDATE_FORM";
 export const ACTUAL_PROJECT = "ACTUAL_PROJECT";
 export const DELETE_PROJECT = "DELETE_PROJECT";
+
+//Task
+export const TASKS_PROJECT = "TASKS_PROJECT";
