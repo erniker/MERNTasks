@@ -1,5 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { TASKS_PROJECT, ADD_TASK, VALDATE_TASK } from "../../types";
+import {
+  TASKS_PROJECT,
+  ADD_TASK,
+  VALDATE_TASK,
+  DELETE_TASK,
+} from "../../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -21,7 +26,11 @@ export default (state, action) => {
         ...state,
         taskError: true,
       };
-
+    case DELETE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => task.id !== action.payload),
+      };
     default:
       return state;
   }
