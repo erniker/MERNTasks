@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import taskContext from "./taskContext";
 import TaskReducer from "./taskReducer";
-import { TASKS_PROJECT, ADD_TASK } from "../../types";
+import { TASKS_PROJECT, ADD_TASK, VALDATE_TASK } from "../../types";
 
 const TaskState = (props) => {
   // define initial state
@@ -22,6 +22,7 @@ const TaskState = (props) => {
       { name: "Elegir Plataformas de pago", state: false, projectId: 3 },
     ],
     tasksProject: null,
+    taskError: false,
   };
 
   // Create dispatch and State
@@ -44,13 +45,22 @@ const TaskState = (props) => {
     });
   };
 
+  // Validate an show error
+  const validateTask = () => {
+    dispatch({
+      type: VALDATE_TASK,
+    });
+  };
+
   return (
     <taskContext.Provider
       value={{
         tasks: state.tasks,
         tasksProject: state.tasksProject,
+        taskError: state.taskError,
         getTasks,
         addTask,
+        validateTask,
       }}
     >
       {props.children}
