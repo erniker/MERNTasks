@@ -9,7 +9,7 @@ const Task = ({ task }) => {
 
   // Get functions fron Task Context
   const tasksContext = useContext(taskContext);
-  const { deleteTask, getTasks } = tasksContext;
+  const { deleteTask, getTasks, changeTaskState } = tasksContext;
 
   // Extract project
   const [currentProject] = actualProject;
@@ -19,17 +19,36 @@ const Task = ({ task }) => {
     deleteTask(taskId);
     getTasks(currentProject.id);
   };
+
+  // Function to change state (complete/incomplete) of a task
+  const changeStateOfTask = (task) => {
+    if (task.state) {
+      task.state = false;
+    } else {
+      task.state = true;
+    }
+    changeTaskState(task);
+  };
+
   return (
     <li className="tarea sombra">
       <p>{task.name}</p>
       <div className="estado">
         {task.state ? (
-          <button className="completo" type="button">
+          <button
+            className="completo"
+            type="button"
+            onClick={() => changeStateOfTask(task)}
+          >
             {" "}
             Completa{" "}
           </button>
         ) : (
-          <button className="incompleto" type="button">
+          <button
+            className="incompleto"
+            type="button"
+            onClick={() => changeStateOfTask(task)}
+          >
             {" "}
             Incompleta{" "}
           </button>
