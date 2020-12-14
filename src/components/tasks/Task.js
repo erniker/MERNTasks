@@ -9,7 +9,7 @@ const Task = ({ task }) => {
 
   // Get functions fron Task Context
   const tasksContext = useContext(taskContext);
-  const { deleteTask, getTasks, changeTaskState } = tasksContext;
+  const { deleteTask, getTasks, changeTaskState, getActualTask } = tasksContext;
 
   // Extract project
   const [currentProject] = actualProject;
@@ -28,6 +28,11 @@ const Task = ({ task }) => {
       task.state = true;
     }
     changeTaskState(task);
+  };
+
+  // Get a selected task when user want edit it
+  const selectTask = (task) => {
+    getActualTask(task);
   };
 
   return (
@@ -55,7 +60,11 @@ const Task = ({ task }) => {
         )}
       </div>
       <div className="acciones">
-        <button className="btn btn-primario" type="button">
+        <button
+          className="btn btn-primario"
+          type="button"
+          onClick={() => selectTask(task)}
+        >
           Editar
         </button>
         <button

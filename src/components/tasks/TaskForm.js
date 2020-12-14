@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import projectContext from "../../context/projects/projectContext";
 import taskContext from "../../context/tasks/taskContext";
 
@@ -9,7 +9,26 @@ const TaskForm = () => {
 
   // Get addTask function fron Task Context
   const tasksContext = useContext(taskContext);
-  const { taskError, addTask, validateTask, getTasks } = tasksContext;
+  const {
+    taskError,
+    selectedTask,
+    addTask,
+    validateTask,
+    getTasks,
+    updateTask,
+    cleanTask,
+  } = tasksContext;
+
+  // Detect if there is a selected task
+  useEffect(() => {
+    if (selectedTask !== null) {
+      saveTask(selectedTask);
+    } else {
+      saveTask({
+        name: "",
+      });
+    }
+  }, [selectedTask]);
 
   // Form State
   const [task, saveTask] = useState({
@@ -42,11 +61,18 @@ const TaskForm = () => {
       return;
     }
 
-    // Add new task to Task state
-    task.projectId = posActualProject.id;
-    task.state = false;
-    addTask(task);
-
+    // Check if is edit or create a new task
+    if (selectedTask === null) {
+      // Add new task to Task state
+      task.projectId = posActualProject.id;
+      task.state = false;
+      addTask(task);
+    } else {
+      //update task
+      updateTask(task);
+      // Cleat selected task from state
+      cleanTask();
+    }
     // Get and filter current project Tasks
     getTasks(posActualProject.id);
 
@@ -73,7 +99,7 @@ const TaskForm = () => {
           <input
             className="btn btn-primario btn-submit btn-block"
             type="submit"
-            value="Agregar tarea"
+            value={selectedTask ? "Editar Tarea" : "Agregar Tarea"}
           />
         </div>
       </form>
