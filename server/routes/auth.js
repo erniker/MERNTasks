@@ -12,7 +12,7 @@ router.post(
     check("email", "A valid email is required").isEmail(),
     check(
       "password",
-      "Please enter a password at least 8 character and contain At least one uppercase, one lower case and one special character."
+      "Please enter a password with at least 8 character and contain at least one uppercase, one lower case and one special character."
     ).isStrongPassword(),
   ],
   authController.userAuth
