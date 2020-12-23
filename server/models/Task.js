@@ -13,7 +13,7 @@ const TaskSchema = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  project: {
+  projectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Project",
   },

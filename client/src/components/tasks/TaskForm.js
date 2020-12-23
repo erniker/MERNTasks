@@ -64,7 +64,7 @@ const TaskForm = () => {
     // Check if is edit or create a new task
     if (selectedTask === null) {
       // Add new task to Task state
-      task.projectId = posActualProject.id;
+      task.projectId = posActualProject._id;
       task.state = false;
       addTask(task);
     } else {
@@ -74,7 +74,7 @@ const TaskForm = () => {
       cleanTask();
     }
     // Get and filter current project Tasks
-    getTasks(posActualProject.id);
+    getTasks(posActualProject._id);
 
     // Restart form
     saveTask({

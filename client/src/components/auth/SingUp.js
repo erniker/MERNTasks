@@ -1,16 +1,27 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AlertContext from "../../context/alerts/alertContext";
 import AuthContext from "../../context/authentication/authContext";
 
-const SingUp = () => {
+const SingUp = (props) => {
   // Extract values from alert context
   const alertsContext = useContext(AlertContext);
   const { alert, showAlert } = alertsContext;
 
   // Extract values from authentication context
   const authsContext = useContext(AuthContext);
-  const { signUpUser } = authsContext;
+  const { signUpUser, authenticated, message } = authsContext;
+
+  // if user is already authenticated, is registered or is a duplicate register
+  useEffect(() => {
+    if (authenticated) {
+      props.history.push("/projects");
+    }
+    if (message) {
+      showAlert(message.msg, message.category);
+    }
+    // eslint-disable-next-line
+  }, [message, authenticated, props.history]); //porps.history para poder acceder a las redirecciones
 
   // SingUp State
   const [user, setUser] = useState({

@@ -15,9 +15,9 @@ exports.createTask = async (req, res) => {
 
   try {
     // Extract project and check if exist
-    const { project } = req.body;
+    const { projectId } = req.body;
 
-    const projectExist = await Project.findById(project);
+    const projectExist = await Project.findById(projectId);
     if (!projectExist) {
       return res.status(404).json({ msg: "Project not found" });
     }
@@ -40,8 +40,9 @@ exports.createTask = async (req, res) => {
 exports.getTasksByProjectId = async (req, res) => {
   try {
     // Extract project and check if exist
-    const { project } = req.body;
-    const projectExist = await Project.findById(project);
+    const { projectId } = req.query;
+
+    const projectExist = await Project.findById(projectId);
     if (!projectExist) {
       return res.status(404).json({ msg: "Project not found" });
     }
@@ -51,7 +52,10 @@ exports.getTasksByProjectId = async (req, res) => {
     }
 
     // Get tasks by project id
-    const tasks = await Task.find({ project });
+    const tasks = await Task.find({ projectId }).sort({
+      created: -1,
+    });
+
     res.json({ tasks });
   } catch (error) {
     console.log(error);
@@ -63,7 +67,7 @@ exports.getTasksByProjectId = async (req, res) => {
 exports.updateTask = async (req, res) => {
   try {
     // Extract project and check if exist
-    const { project, name, state } = req.body;
+    const { projectId, name, state } = req.body;
 
     // Check if task exist
     let task = await Task.findById(req.params.id);
@@ -73,15 +77,15 @@ exports.updateTask = async (req, res) => {
     }
 
     // Extract project
-    const projectExist = await Project.findById(project);
+    const projectExist = await Project.findById(projectId);
     // Check if current project belong to authenticated user
     if (projectExist.owner.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized" });
     }
     // Create a new task object with new information
     const newTask = {};
-    if (name) newTask.name = name;
-    if (state) newTask.state = state;
+    newTask.name = name;
+    newTask.state = state;
     // Save task
     task = await Task.findOneAndUpdate({ _id: req.params.id }, newTask, {
       new: true,
@@ -97,7 +101,7 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   try {
     // Extract project and check if exist
-    const { project } = req.body;
+    const { projectId } = req.query;
 
     // Check if task exist
     let task = await Task.findById(req.params.id);
@@ -107,11 +111,13 @@ exports.deleteTask = async (req, res) => {
     }
 
     // Extract project
-    const projectExist = await Project.findById(project);
+    const projectExist = await Project.findById(projectId);
+
     // Check if current project belong to authenticated user
     if (projectExist.owner.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized" });
     }
+
     // Delete task
     await Task.findOneAndRemove({ _id: req.params.id });
     res.json({ msg: "Task deleted" });

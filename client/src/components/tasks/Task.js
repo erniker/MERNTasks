@@ -9,15 +9,15 @@ const Task = ({ task }) => {
 
   // Get functions fron Task Context
   const tasksContext = useContext(taskContext);
-  const { deleteTask, getTasks, changeTaskState, getActualTask } = tasksContext;
+  const { deleteTask, getTasks, updateTask, getActualTask } = tasksContext;
 
   // Extract project
   const [currentProject] = actualProject;
 
   // Function to eliminate task when user click on "Eliminar" button
   const onClickDeleteTask = (taskId) => {
-    deleteTask(taskId);
-    getTasks(currentProject.id);
+    deleteTask(taskId, currentProject._id);
+    getTasks(currentProject._id);
   };
 
   // Function to change state (complete/incomplete) of a task
@@ -27,7 +27,7 @@ const Task = ({ task }) => {
     } else {
       task.state = true;
     }
-    changeTaskState(task);
+    updateTask(task);
   };
 
   // Get a selected task when user want edit it
@@ -70,7 +70,7 @@ const Task = ({ task }) => {
         <button
           className="btn btn-secundario"
           type="button"
-          onClick={() => onClickDeleteTask(task.id)}
+          onClick={() => onClickDeleteTask(task._id)}
         >
           Eliminar
         </button>

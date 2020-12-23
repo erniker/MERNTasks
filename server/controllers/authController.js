@@ -18,14 +18,14 @@ exports.userAuth = async (req, res) => {
     if (!user) {
       return res
         .status(401)
-        .json({ msj: "The user does not exists, or password is incorrect" });
+        .json({ msg: "The user does not exists, or password is incorrect" });
     }
     // Check password
     const correctPass = await bcryptjs.compare(password, user.password);
     if (!correctPass) {
       return res
         .status(401)
-        .json({ msj: "The user does not exists, or password is incorrect" });
+        .json({ msg: "The user does not exists, or password is incorrect" });
     }
 
     // If all s correct, create an sign JWT
@@ -49,5 +49,17 @@ exports.userAuth = async (req, res) => {
     );
   } catch (error) {
     console.log(error);
+  }
+};
+// Get authenticated user
+exports.authenticatedUser = async (req, res) => {
+  try {
+    const authenticatedUser = await User.findById(req.user.id).select(
+      "-password"
+    );
+    res.json({ user: authenticatedUser });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Unknow error");
   }
 };

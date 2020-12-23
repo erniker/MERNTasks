@@ -11,7 +11,7 @@ router.post(
   auth,
   [
     check("name", "The name is required").not().isEmpty(),
-    check("project", "The project is required").not().isEmpty(),
+    check("projectId", "The project id is required").not().isEmpty(),
   ],
   taskController.createTask
 );
