@@ -93,6 +93,7 @@ const TaskForm = () => {
             name="name"
             value={name}
             onChange={handleChange}
+            data-cy="input-tarea"
           />
         </div>
         <div className="contenedor-input">
@@ -100,11 +101,14 @@ const TaskForm = () => {
             className="btn btn-primario btn-submit btn-block"
             type="submit"
             value={selectedTask ? "Editar Tarea" : "Agregar Tarea"}
+            data-cy="submit-tarea"
           />
         </div>
       </form>
       {taskError ? (
-        <p className="mensaje error">El nombre de la tarea es obligatorio</p>
+        <p className="mensaje error" data-cy="alerta">
+          El nombre de la tarea es obligatorio
+        </p>
       ) : null}
     </div>
   );

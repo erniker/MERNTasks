@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AlertContext from "../../context/alerts/alertContext";
 import AuthContext from "../../context/authentication/authContext";
+import Alert from "../layout/Alert";
 
 const Login = (props) => {
   // Extract values from alert context
@@ -44,7 +45,7 @@ const Login = (props) => {
     e.preventDefault();
     // Empty field validation
     if (email.trim() === "" || password.trim() === "") {
-      showAlert("All fields are required", "alerta-error");
+      showAlert("All fields are required.", "alerta-error");
       return;
     }
     // Send to action
@@ -53,12 +54,10 @@ const Login = (props) => {
 
   return (
     <div className="form-usuario">
-      {alert ? (
-        <div className={`alerta ${alert.category}`}>{alert.msg}</div>
-      ) : null}
+      <Alert alert={alert} />
       <div className="contenedor-form sombra-dark">
-        <h1>Iniciar Sesión</h1>
-        <form onSubmit={onSubmit}>
+        <h1 data-cy="titulo">Iniciar Sesión</h1>
+        <form onSubmit={onSubmit} data-cy="form-login">
           <div className="campo-form">
             <label htmlFor="email">Enail</label>
             <input
@@ -68,6 +67,7 @@ const Login = (props) => {
               placeholder="Tu Email"
               value={email}
               onChange={onChangeLogin}
+              data-cy="email-input"
             ></input>
           </div>
           <div className="campo-form">
@@ -79,6 +79,7 @@ const Login = (props) => {
               placeholder="Tu Password"
               value={password}
               onChange={onChangeLogin}
+              data-cy="password-input"
             ></input>
           </div>
           <div className="campo-form">
@@ -86,10 +87,11 @@ const Login = (props) => {
               type="submit"
               className="btn btn-primario btn-block"
               value="Iniciar Sesión"
+              data-cy="submit-login"
             />
           </div>
         </form>
-        <Link className="enlace-cuenta" to={"/sing-up"}>
+        <Link className="enlace-cuenta" to={"/sing-up"} data-cy="nueva-cuenta">
           Crear cuenta
         </Link>
       </div>

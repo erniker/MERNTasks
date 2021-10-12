@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AlertContext from "../../context/alerts/alertContext";
 import AuthContext from "../../context/authentication/authContext";
+import Alert from "../layout/Alert";
 
 const SingUp = (props) => {
   // Extract values from alert context
@@ -61,7 +62,7 @@ const SingUp = (props) => {
       password.trim() === "" ||
       confirm.trim() === ""
     ) {
-      showAlert("All fields are required", "alerta-error");
+      showAlert("All fields are required.", "alerta-error");
       return;
     }
     // Check if is a strong password
@@ -80,7 +81,7 @@ const SingUp = (props) => {
 
     // Check password and confirmPassword are equal
     if (password !== confirm) {
-      showAlert("Pasword and Confirm password must be equal", "alerta-error");
+      showAlert("Pasword and Confirm password must be equal.", "alerta-error");
       return;
     }
 
@@ -90,12 +91,10 @@ const SingUp = (props) => {
 
   return (
     <div className="form-usuario">
-      {alert ? (
-        <div className={`alerta ${alert.category}`}>{alert.msg}</div>
-      ) : null}
+      <Alert alert={alert} />
       <div className="contenedor-form sombra-dark">
-        <h1>Crear cuenta</h1>
-        <form onSubmit={onSubmit}>
+        <h1 data-cy="titulo">Crear cuenta</h1>
+        <form onSubmit={onSubmit} data-cy="nueva-cuenta">
           <div className="campo-form">
             <label htmlFor="name">Nombre</label>
             <input
@@ -105,6 +104,7 @@ const SingUp = (props) => {
               placeholder="Tu Nombre"
               value={name}
               onChange={onChangeSingUp}
+              data-cy="nombre-input"
             ></input>
           </div>
           <div className="campo-form">
@@ -116,6 +116,7 @@ const SingUp = (props) => {
               placeholder="Tu Email"
               value={email}
               onChange={onChangeSingUp}
+              data-cy="email-input"
             ></input>
           </div>
           <div className="campo-form">
@@ -127,6 +128,7 @@ const SingUp = (props) => {
               placeholder="Tu Password"
               value={password}
               onChange={onChangeSingUp}
+              data-cy="password-input"
             ></input>
           </div>
           <div className="campo-form">
@@ -138,6 +140,7 @@ const SingUp = (props) => {
               placeholder="Repite tu Password"
               value={confirm}
               onChange={onChangeSingUp}
+              data-cy="repetir-password-input"
             ></input>
           </div>
           <div className="campo-form">
@@ -145,10 +148,11 @@ const SingUp = (props) => {
               type="submit"
               className="btn btn-primario btn-block"
               value="Registrarme"
+              data-cy="submit-nueva-cuenta"
             />
           </div>
         </form>
-        <Link className="enlace-cuenta" to={"/"}>
+        <Link className="enlace-cuenta" to={"/"} data-cy="enlace-login">
           Login
         </Link>
       </div>

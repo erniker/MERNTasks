@@ -36,7 +36,7 @@ const Task = ({ task }) => {
   };
 
   return (
-    <li className="tarea sombra">
+    <li className="tarea sombra" data-cy="tarea">
       <p>{task.name}</p>
       <div className="estado">
         {task.state ? (
@@ -44,6 +44,7 @@ const Task = ({ task }) => {
             className="completo"
             type="button"
             onClick={() => changeStateOfTask(task)}
+            data-cy="tarea-completa"
           >
             {" "}
             Completa{" "}
@@ -53,6 +54,7 @@ const Task = ({ task }) => {
             className="incompleto"
             type="button"
             onClick={() => changeStateOfTask(task)}
+            data-cy="tarea-incompleta"
           >
             {" "}
             Incompleta{" "}
@@ -64,6 +66,7 @@ const Task = ({ task }) => {
           className="btn btn-primario"
           type="button"
           onClick={() => selectTask(task)}
+          data-cy="btn-editar"
         >
           Editar
         </button>
@@ -71,6 +74,7 @@ const Task = ({ task }) => {
           className="btn btn-secundario"
           type="button"
           onClick={() => onClickDeleteTask(task._id)}
+          data-cy="btn-eliminar"
         >
           Eliminar
         </button>

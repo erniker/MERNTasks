@@ -14,7 +14,8 @@ const TaskList = () => {
   const { tasksProject } = tasksContext;
 
   // If there is not selected project
-  if (!actualProject) return <h2>Selecciona un Proyecto</h2>;
+  if (!actualProject)
+    return <h2 data-cy="selecciona">Selecciona un Proyecto</h2>;
 
   // Array destructuring to extract actual project
   const [posActualProject] = actualProject;
